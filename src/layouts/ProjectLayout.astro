@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const data = project.data;
+---
+
+<BaseLayout title={data.title} description={data.dek}>
+  <header class="detail-hero">
+    <div class="container">
+      <p class="detail-kicker">{data.badge} / {data.year}</p>
+      <h1 class="detail-title">{data.title}</h1>
+      <p class="detail-dek">{data.dek}</p>
+      <div class="detail-actions">
+        {data.external && <a class="button-link" href={data.external.href}>{data.external.label} &rarr;</a>}
+        {data.paper && <a class="button-link" href={data.paper}>Download paper &rarr;</a>}
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="detail-grid">
+      <article class="prose">
+        <slot />
+      </article>
+      <aside class="meta-panel">
+        <h2>Project Notes</h2>
+        <dl class="meta-list">
+          <div>
+            <dt>Type</dt>
+            <dd>{data.type === 'product' ? 'Product' : 'Research'}</dd>
+          </div>
+          {data.role && (
+            <div>
+              <dt>Role</dt>
+              <dd>{data.role}</dd>
+            </div>
+          )}
+          {data.result && (
+            <div>
+              <dt>Result</dt>
+              <dd>{data.result}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Stack</dt>
+            <dd>{data.stack.join(', ')}</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

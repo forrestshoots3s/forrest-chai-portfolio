@@ -1,0 +1,36 @@
+---
+interface Photo {
+  file: string;
+  alt?: string;
+}
+
+interface Props {
+  photos: Photo[];
+  variant?: 'preview' | 'gallery';
+  href?: string;
+}
+
+const { photos, variant = 'preview', href } = Astro.props;
+const encodePhoto = (file: string) => `/photos/${encodeURIComponent(file)}`;
+const encodeThumb = (file: string) => `/photos/thumbs/${encodeURIComponent(file.replace(/\.[^.]+$/, '.webp'))}`;
+---
+
+<div class:list={[variant === 'gallery' ? 'gallery-grid' : 'photo-grid preview']}>
+  {photos.map((photo, index) => {
+    const src = encodePhoto(photo.file);
+    const thumb = encodeThumb(photo.file);
+    const alt = photo.alt ?? 'Photography by Forrest Chai';
+    if (href) {
+      return (
+        <a class="photo-cell" href={href}>
+          <img src={thumb} alt={alt} loading="lazy" decoding="async" />
+        </a>
+      );
+    }
+    return (
+      <button class="photo-cell" type="button" data-index={index} data-src={src} aria-label={`Open photo ${index + 1}`}>
+        <img src={thumb} alt={alt} loading="lazy" decoding="async" />
+      </button>
+    );
+  })}
+</div>

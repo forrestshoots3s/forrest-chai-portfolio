@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PhotoGrid from '../components/PhotoGrid.astro';
+import photosManifest from '../content/photos/manifest.json';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const homeProjects = projects.filter((project) => project.data.featuredHome);
+const featuredProject = homeProjects.find((project) => project.data.type === 'product' && project.data.featured);
+const secondaryProjects = homeProjects.filter((project) => project.id !== featuredProject?.id);
+const previewPhotos = photosManifest
+  .filter((photo) => photo.featured)
+  .sort((a, b) => a.order - b.order)
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title="Forrest Chai"
+  description="AI products, research projects, and photography by Forrest Chai."
+>
+  <Hero />
+
+  <section class="section" id="projects">
+    <div class="container">
+      <SectionHeading title="Selected " emphasis="Work" index={`${homeProjects.length.toString().padStart(2, '0')} projects`} />
+      <div class="project-grid">
+        {featuredProject && <ProjectCard project={featuredProject} featured />}
+        {secondaryProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section photo-section" id="photography">
+    <div class="container">
+      <SectionHeading title="Through the " emphasis="lens" index="94 frames · selected" />
+      <PhotoGrid photos={previewPhotos} href="/photography/" />
+      <div class="photo-cta">
+        <a href="/photography/">View all photos <span>&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

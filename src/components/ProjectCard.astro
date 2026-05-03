@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const data = project.data;
+const slug = project.id.replace(/\.(md|mdx)$/, '');
+const href = `/projects/${slug}/`;
+---
+
+<a class:list={['project-card', { featured }]} href={href}>
+  <div class="project-meta">
+    <span class="badge">{data.badge}</span>
+    <span>{data.period ?? data.year}</span>
+  </div>
+  <h3>{data.title}</h3>
+  {data.cardBullets ? (
+    <ul class="project-bullets">
+      {data.cardBullets.map((item) => <li>{item}</li>)}
+    </ul>
+  ) : (
+    <p class="project-blurb">{data.dek}</p>
+  )}
+  {data.result && <p class="project-result">{data.result}</p>}
+  <div class="card-footer">
+    <div class="stack">
+      {data.stack.slice(0, 4).map((item) => <span>{item}</span>)}
+    </div>
+    <span class="read-link">{data.type === 'product' ? 'View work' : 'View project'} &rarr;</span>
+  </div>
+</a>

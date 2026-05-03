@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import PhotoGrid from '../components/PhotoGrid.astro';
+import PhotoLightbox from '../components/PhotoLightbox.astro';
+import photosManifest from '../content/photos/manifest.json';
+
+const photos = photosManifest.slice().sort((a, b) => a.order - b.order);
+---
+
+<BaseLayout
+  title="Photography"
+  description="Photography by Forrest Chai."
+>
+  <header class="detail-hero">
+    <div class="container">
+      <p class="detail-kicker">Photography</p>
+      <h1 class="detail-title">Milky Way, sunrise &amp; sunset.</h1>
+      <p class="detail-dek">
+        94 frames across lake and ocean light, city edges, forest paths, and beyond.
+      </p>
+    </div>
+  </header>
+
+  <section class="section photo-section" id="gallery">
+    <div class="container">
+      <SectionHeading title="Full " emphasis="gallery" index={`${photos.length} frames`} />
+      <PhotoGrid photos={photos} variant="gallery" />
+    </div>
+  </section>
+  <PhotoLightbox photos={photos} />
+</BaseLayout>

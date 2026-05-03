@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  emphasis?: string;
+  index?: string;
+  level?: 'h1' | 'h2';
+}
+
+const { title, emphasis, index, level = 'h2' } = Astro.props;
+const Tag = level;
+---
+
+<div class="section-head">
+  <Tag>
+    {title}
+    {emphasis && <><em>{emphasis}</em></>}
+  </Tag>
+  {index && <span class="section-index">{index}</span>}
+</div>

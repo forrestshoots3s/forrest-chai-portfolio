@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="About Forrest Chai."
+>
+  <header class="detail-hero">
+    <div class="container">
+      <p class="detail-kicker">About</p>
+      <h1 class="detail-title">Builder, researcher, photographer.</h1>
+      <p class="detail-dek">
+        CS, Math &amp; HCI @ Northwestern. Applied AI Engineer at CrowdListen. Regeneron STS Scholar '25.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container about-columns">
+      <article class="prose">
+        <SectionHeading title="Short " emphasis="bio" />
+        <p>
+          I study computer science, mathematics, and human-computer interaction at Northwestern, where I am drawn to systems that connect rigorous models with real product behavior.
+        </p>
+        <p>
+          At CrowdListen, I work on applied AI workflows that help agents use current business context. My research spans drug-drug interaction prediction with gated message passing neural networks and mathematical modeling competitions.
+        </p>
+        <p>
+          Outside of product and research work, I photograph sunsets by Lake Michigan, city light, and the Milky Way.
+        </p>
+      </article>
+      <aside>
+        <SectionHeading title="Contact" />
+        <ul class="contact-list">
+          <li><a href="mailto:forrestchai0921@gmail.com">forrestchai0921@gmail.com</a></li>
+          <li>Evanston, IL</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

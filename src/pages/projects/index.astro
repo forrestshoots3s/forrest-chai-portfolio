@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const productProjects = projects.filter((project) => project.data.type === 'product');
+const researchProjects = projects.filter((project) => project.data.type === 'research');
+const productCount = `${productProjects.length} ${productProjects.length === 1 ? 'project' : 'projects'}`;
+const researchCount = `${researchProjects.length} ${researchProjects.length === 1 ? 'project' : 'projects'}`;
+---
+
+<BaseLayout
+  title="Projects"
+  description="Product and research projects by Forrest Chai."
+>
+  <header class="detail-hero">
+    <div class="container">
+      <p class="detail-kicker">Projects</p>
+      <h1 class="detail-title">AI products &amp; agent research.</h1>
+      <p class="detail-dek">
+        Currently focused on LLM/VLM agent infrastructure and workflows: building, studying, and turning ideas into concrete artifacts.
+      </p>
+      <div class="project-switch" role="tablist" aria-label="Project category">
+        <button type="button" role="tab" aria-selected="true" aria-controls="product-panel" id="product-tab" data-project-tab="product">Product</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="research-panel" id="research-tab" data-project-tab="research">Research</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section project-panel" id="product-panel" role="tabpanel" aria-labelledby="product-tab" data-project-panel="product">
+    <div class="container">
+      <SectionHeading title="Product" index={productCount} />
+      <div class="project-grid">
+        {productProjects.map((project) => <ProjectCard project={project} featured={project.data.featured} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section project-panel" id="research-panel" role="tabpanel" aria-labelledby="research-tab" data-project-panel="research" hidden>
+    <div class="container">
+      <SectionHeading title="Research" index={researchCount} />
+      <div class="project-grid">
+        {researchProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[data-project-tab]'));
+    const panels = Array.from(document.querySelectorAll('[data-project-panel]'));
+    const setActive = (kind) => {
+      tabs.forEach((tab) => {
+        const active = tab.getAttribute('data-project-tab') === kind;
+        tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      panels.forEach((panel) => {
+        const active = panel.getAttribute('data-project-panel') === kind;
+        panel.toggleAttribute('hidden', !active);
+      });
+      history.replaceState(null, '', kind === 'research' ? '#research' : '#product');
+    };
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => setActive(tab.getAttribute('data-project-tab')));
+    });
+    setActive(location.hash === '#research' ? 'research' : 'product');
+  </script>
+</BaseLayout>
