@@ -38,9 +38,6 @@ const formatDate = (date: Date) =>
                   <time class="post-date" datetime={post.data.date.toISOString()}>
                     {formatDate(post.data.date)}
                   </time>
-                  {post.data.readingTime && (
-                    <span class="post-reading">{post.data.readingTime}</span>
-                  )}
                 </div>
                 <div class="post-row-body">
                   <h2 class="post-title">{post.data.title}</h2>

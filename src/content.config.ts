@@ -33,7 +33,6 @@ const posts = defineCollection({
     title: z.string(),
     dek: z.string().optional(),
     date: z.coerce.date(),
-    readingTime: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

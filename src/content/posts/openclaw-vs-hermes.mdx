@@ -1,0 +1,95 @@
+---
+title: "OpenClaw vs. Hermes: Two Different Answers to the Agent Architecture Question"
+dek: "OpenClaw compounds control. Hermes compounds behavior. The real comparison isn't which is stronger — it's what each thinks the next bottleneck in agent systems actually is."
+date: 2026-05-13
+---
+
+## Abstract
+
+A lot of comparisons between OpenClaw and Hermes reduce the discussion to which one is "stronger," "smarter," or "more advanced." I think that framing misses the real point. The more useful comparison is architectural: what core problem is each system trying to solve, and what kind of product philosophy follows from that choice? Based on the two engineering breakdowns I read, OpenClaw is primarily organized around safe, reliable, and governable execution, while Hermes is primarily organized around self-improvement, memory, and behavioral adaptation over time. That difference propagates through skills, memory, context compression, delegation, execution environments, and safety design. In that sense, OpenClaw and Hermes are not just two competing agent frameworks. They are two different answers to what an agent product should optimize for in this stage of the market ("万字：OpenClaw vs Hermes," 2026a; "【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计," 2026b).
+
+## 1. Introduction
+
+When people compare agent systems, they often start from surface impressions. Which one feels smarter? Which one finishes more tasks? Which one has more stars, more hype, or more community excitement?
+
+But that is rarely the best place to start. With agent products, the more important question is usually: what kind of failure is this system most worried about? A framework designed around safety and control will look very different from one designed around learning and adaptation, even if both can do similar demos. That is why I do not think the OpenClaw-versus-Hermes conversation is really about who "wins." It is about what each framework believes the next bottleneck in agent systems actually is ("万字：OpenClaw vs Hermes," 2026a).
+
+From that perspective, the contrast becomes much clearer. OpenClaw asks: how do we make agent execution safer, more stable, and more production-like? Hermes asks: how do we make the agent itself become more capable as it accumulates experience? Once those two starting points diverge, everything else starts to diverge with them as well ("万字：OpenClaw vs Hermes," 2026a).
+
+## 2. Different center of gravity, different product philosophy
+
+The first article makes this difference especially clear by framing the two systems around different "core questions." OpenClaw is oriented toward safe and reliable execution: approval layers, plugin boundaries, sandboxing, and security modules. Hermes is oriented toward a learning loop: experience, skill extraction, improvement, and persistent knowledge. In other words, OpenClaw is more concerned with how an agent should act inside a controlled system, while Hermes is more concerned with how an agent can gradually become better at doing work ("万字：OpenClaw vs Hermes," 2026a).
+
+I think this is the most important lens for reading both projects. OpenClaw feels closer to infrastructure. Hermes feels closer to an evolving worker. One is trying to make the harness more dependable; the other is trying to make the agent more adaptive. That does not mean one is categorically better. It means their product instincts point in different directions.
+
+This also explains why public reactions can be misleading. Hermes may look more "intelligent" to many users because it appears to learn, remember, and improve. OpenClaw may look less magical in comparison because more of its value is hidden in the engineering boundary: what is allowed, what is isolated, what is auditable, and what is deliberately constrained. Those are not the same kind of value, and they are not equally visible to casual users ("万字：OpenClaw vs Hermes," 2026a).
+
+## 3. Skills: explicit operating manuals versus accumulated procedural memory
+
+The difference in philosophy shows up very clearly in the skill system.
+
+According to the first article, OpenClaw's skills are primarily predefined task procedures written and maintained by humans. Their role is to tell the agent how to perform a class of tasks in a standardized and controllable way. In this design, the skill system is less about self-evolution and more about operational consistency. The agent does not autonomously rewrite the organization's methods; humans remain the main source of procedural authority ("万字：OpenClaw vs Hermes," 2026a).
+
+Hermes moves in the opposite direction. Its skill loop is built around the idea that successful task trajectories, repeated corrections, and reusable multi-step workflows can be extracted and turned into new skill files. The article emphasizes that this is not implemented as a hard-coded background learning pipeline; instead, Hermes uses layered prompting to encourage the agent to decide when a skill should be created or updated. That is a much more ambitious interpretation of what skills are. They are not just manuals written for the agent. They are also a place where the agent can deposit experience ("万字：OpenClaw vs Hermes," 2026a).
+
+To me, this is one of the deepest differences between the two systems. OpenClaw treats skills more like codified process. Hermes treats skills more like procedural memory. OpenClaw asks humans to teach the agent how to work. Hermes asks the agent to participate in constructing its own working methods. That makes Hermes more flexible and, in some cases, more compelling. It also makes it less predictable, because the very mechanism that allows adaptation can also drift, overgeneralize, or produce messy skill growth if not carefully managed ("万字：OpenClaw vs Hermes," 2026a).
+
+## 4. Memory: constrained integration versus full participation in the reasoning loop
+
+The memory comparison pushes the contrast even further.
+
+The first article describes OpenClaw's memory as a special plugin slot rather than an irreplaceable built-in core. That choice keeps the interface clean and controllable. Only one memory plugin is active at a time, which reduces the chance that memory becomes an unbounded or unstable influence on the agent's behavior. In other words, OpenClaw treats memory as something that should integrate into the system without overwhelming it ("万字：OpenClaw vs Hermes," 2026a).
+
+Hermes treats memory much more expansively. The article describes a three-part design: built-in memory files for stable environment and user-preference information, external memory providers for richer long-term memory behaviors, and session search for retrieving prior conversations on demand. Even more importantly, the external memory-provider interface participates at many points in the agent lifecycle: before turns, after turns, before compression, after delegation, on memory writes, and at session end. This means memory is not just stored in Hermes; it is woven into the reasoning process itself ("万字：OpenClaw vs Hermes," 2026a).
+
+I think this is why Hermes feels more like a personal or companion-style agent system. It is trying to know you better, adapt to your patterns, and bring more accumulated context into future work. OpenClaw, by comparison, feels more reserved. It is less interested in becoming "more like you" and more interested in making sure memory enters the system through a controlled interface.
+
+That difference also reveals the trade-off. Hermes's memory system can make the agent feel more helpful and more continuous over time, especially for individual users or small teams. But the richer memory becomes, the harder it is to guarantee that the system remains stable, interpretable, and safe. OpenClaw gives up some of that flexibility in exchange for a simpler boundary ("万字：OpenClaw vs Hermes," 2026a).
+
+## 5. Multi-agent architecture: managed session boundaries versus in-process delegation
+
+The second article is especially useful because it shifts the discussion from features to architecture.
+
+Its key argument is that both OpenClaw and Hermes use multi-agent design, but they implement it through very different boundaries. OpenClaw models sub-agents through the session system. A parent agent creates a child session, and that child has its own session identity, lifecycle state, metadata, and policy boundary. Results come back through an event chain rather than as a simple function return. That means OpenClaw thinks of sub-agents as managed runtime units inside a session-governed system ("【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计," 2026b).
+
+Hermes, by contrast, treats delegation more like in-process task execution. The parent delegates a task, the system creates child agent instances within the current process, and those children return structured results back to the parent. Hermes still isolates context, toolsets, and roles, but the architectural unit is lighter. It is not primarily a session object inside a broader runtime fabric. It is a bounded worker created for a local subproblem ("【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计," 2026b).
+
+This difference matters because it changes what each framework is optimizing for. OpenClaw's session-centered design is heavier, but it gives the system stronger handles for lifecycle management, role metadata, permission control, recovery, and event-driven coordination. Hermes's process-centered delegation path is shorter and more fluid, but it shifts more of the burden to runtime coordination inside the current process.
+
+I think this aligns perfectly with the broader philosophical split. OpenClaw wants sub-agents to be governable entities. Hermes wants sub-agents to be efficient task performers. Again, that is not simply a difference in implementation style. It is a difference in how each project imagines the future of agent work ("【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计," 2026b).
+
+## 6. Safety versus growth is the real strategic trade-off
+
+The first article repeatedly returns to what I think is the core strategic tension: safety versus growth.
+
+OpenClaw's design is much more clearly rooted in explicit safety philosophy. The article highlights approval layers, dangerous-tool restrictions, sandboxing, and a generally default-safe posture. Even if the framework is not yet truly production-grade in the strict enterprise sense, its design instinct is obvious: the system should prefer boundary clarity over behavioral freedom ("万字：OpenClaw vs Hermes," 2026a).
+
+Hermes takes a more permissive and adaptive stance. It still includes danger detection and approval logic, but the article describes a "smart approval" mechanism in which an auxiliary model evaluates risk and only escalates higher-risk actions for user confirmation. That makes the system feel smoother and more intelligent, but it also introduces a new trust dependency: the safety filter itself is now partly model-mediated. In other words, Hermes is willing to accept more architectural ambiguity in exchange for a more fluid and seemingly smarter user experience ("万字：OpenClaw vs Hermes," 2026a).
+
+This is probably the most important product trade-off between the two systems. OpenClaw is optimized around the anxiety that agents may do unsafe or uncontrollable things. Hermes is optimized around the anxiety that agents may stay static, forgetful, and too rigid to become truly useful over time. One is more afraid of dangerous action. The other is more afraid of non-learning.
+
+## 7. My view: they are building toward different futures
+
+My own takeaway is that OpenClaw and Hermes are best understood as two different bets on where agent value will compound.
+
+OpenClaw is betting that the real moat comes from control surfaces: safe execution, session structure, tool boundaries, and an architecture that looks more like governed infrastructure than free-form cognition. Hermes is betting that the real moat comes from accumulation: memory, reusable experience, self-improvement, and workflows that become more natural and personalized the more they are used ("万字：OpenClaw vs Hermes," 2026a; "【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计," 2026b).
+
+That is why I do not think the conversation should be framed as "Hermes replaces OpenClaw" or "OpenClaw is more serious." Those claims flatten the design space. A better reading is that they are optimizing for different futures. If the future of agent products is primarily about governability, OpenClaw's instincts look prescient. If the future is primarily about compounding usefulness through learning and memory, Hermes's instincts look prescient.
+
+Most likely, the long-term winning systems will need parts of both.
+
+## 8. Conclusion
+
+The real comparison between OpenClaw and Hermes is not about which one has more features or which one feels more impressive in a demo. It is about where each framework thinks the next layer of value should live.
+
+OpenClaw places that value in explicit control: sessions, permissions, sandboxing, and safe execution boundaries. Hermes places that value in adaptation: learning loops, memory, skill accumulation, and flexible delegation. One compounds control. The other compounds behavior.
+
+That is why I think they matter for different reasons. OpenClaw is a strong answer to the problem of governable agents. Hermes is a strong answer to the problem of agents that should get better with use.
+
+And that, to me, is a much more interesting comparison than asking which one is simply "better."
+
+## References
+
+"万字：OpenClaw vs Hermes." 2026a. WeChat Official Account. [mp.weixin.qq.com/s/wPuKUlajb6IaIL3uH7gSAA](https://mp.weixin.qq.com/s/wPuKUlajb6IaIL3uH7gSAA)
+
+"【深度拆解】OpenClaw vs Hermes：多 Agent 架构设计." 2026b. WeChat Official Account. [mp.weixin.qq.com/s/0GvtgYRJBSietf24K-d7ug](https://mp.weixin.qq.com/s/0GvtgYRJBSietf24K-d7ug)

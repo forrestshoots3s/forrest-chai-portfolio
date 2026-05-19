@@ -900,11 +900,6 @@ a {
   text-transform: uppercase;
 }
 
-.post-reading {
-  color: var(--ink-soft);
-  font-size: 12px;
-}
-
 .post-row-body {
   min-width: 0;
 }
