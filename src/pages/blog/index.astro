@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionHeading from '../../components/SectionHeading.astro';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => {
   const diff = b.data.date.valueOf() - a.data.date.valueOf();
@@ -11,8 +10,6 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort((a,
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-const count = `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`;
 ---
 
 <BaseLayout
@@ -31,19 +28,25 @@ const count = `${posts.length} ${posts.length === 1 ? 'post' : 'posts'}`;
 
   <section class="section">
     <div class="container">
-      <SectionHeading title="All " emphasis="writing" index={count} />
       <ul class="post-list">
         {posts.map((post) => {
           const slug = post.id.replace(/\.(md|mdx)$/, '');
           return (
             <li class="post-item">
               <a href={`/blog/${slug}/`} class="post-link">
-                <time class="post-date" datetime={post.data.date.toISOString()}>
-                  {formatDate(post.data.date)}
-                </time>
-                <h2 class="post-title">{post.data.title}</h2>
-                {post.data.dek && <p class="post-dek">{post.data.dek}</p>}
-                <p class="post-cta">Read essay <span aria-hidden="true">&rarr;</span></p>
+                <div class="post-row-meta">
+                  <time class="post-date" datetime={post.data.date.toISOString()}>
+                    {formatDate(post.data.date)}
+                  </time>
+                  {post.data.readingTime && (
+                    <span class="post-reading">{post.data.readingTime}</span>
+                  )}
+                </div>
+                <div class="post-row-body">
+                  <h2 class="post-title">{post.data.title}</h2>
+                  {post.data.dek && <p class="post-dek">{post.data.dek}</p>}
+                  <p class="post-cta">Read essay <span aria-hidden="true">&rarr;</span></p>
+                </div>
               </a>
             </li>
           );
