@@ -823,6 +823,29 @@ a {
   color: var(--accent-h);
 }
 
+.project-video {
+  margin: 32px 0 8px;
+  padding: 0;
+}
+
+.project-video video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: #000;
+  box-shadow: 0 12px 32px -20px rgba(10, 20, 40, 0.35);
+}
+
+.project-video figcaption {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  text-align: center;
+}
+
 .prose strong {
   color: var(--ink);
 }
