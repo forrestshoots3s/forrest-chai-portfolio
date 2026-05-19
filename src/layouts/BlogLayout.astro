@@ -1,0 +1,43 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { title, dek, date, readingTime } = post.data;
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={dek ?? title}>
+  <header class="detail-hero">
+    <div class="container">
+      <p class="detail-kicker">Writing / {date.getFullYear()}</p>
+      <h1 class="detail-title">{title}</h1>
+      {dek && <p class="detail-dek">{dek}</p>}
+      <p class="post-meta">
+        <span>By Forrest Chai</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {readingTime && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime}</span>
+          </>
+        )}
+      </p>
+    </div>
+  </header>
+  <div class="container">
+    <article class="prose post-prose">
+      <slot />
+      <p class="post-back"><a href="/blog/">&larr; Back to all writing</a></p>
+    </article>
+  </div>
+</BaseLayout>
