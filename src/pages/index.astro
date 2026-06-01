@@ -15,6 +15,15 @@ const previewPhotos = photosManifest
   .filter((photo) => photo.featured)
   .sort((a, b) => a.order - b.order)
   .slice(0, 6);
+const recentPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => {
+    const diff = b.data.date.valueOf() - a.data.date.valueOf();
+    if (diff !== 0) return diff;
+    return a.data.title.localeCompare(b.data.title);
+  })
+  .slice(0, 3);
+const formatPostDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <BaseLayout
@@ -29,6 +38,36 @@ const previewPhotos = photosManifest
       <div class="project-grid">
         {featuredProject && <ProjectCard project={featuredProject} featured />}
         {secondaryProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="writing">
+    <div class="container">
+      <SectionHeading title="Recent " emphasis="writing" index={`latest ${recentPosts.length}`} />
+      <ul class="post-list">
+        {recentPosts.map((post) => {
+          const slug = post.id.replace(/\.(md|mdx)$/, '');
+          return (
+            <li class="post-item">
+              <a href={`/blog/${slug}/`} class="post-link">
+                <div class="post-row-meta">
+                  <time class="post-date" datetime={post.data.date.toISOString()}>
+                    {formatPostDate(post.data.date)}
+                  </time>
+                </div>
+                <div class="post-row-body">
+                  <h3 class="post-title">{post.data.title}</h3>
+                  {post.data.dek && <p class="post-dek">{post.data.dek}</p>}
+                  <p class="post-cta">Read essay <span aria-hidden="true">&rarr;</span></p>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="photo-cta">
+        <a href="/blog/">View all writing <span>&rarr;</span></a>
       </div>
     </div>
   </section>
