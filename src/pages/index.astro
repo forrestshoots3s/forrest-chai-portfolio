@@ -14,7 +14,7 @@ const secondaryProjects = homeProjects.filter((project) => project.id !== featur
 const previewPhotos = photosManifest
   .filter((photo) => photo.featured)
   .sort((a, b) => a.order - b.order)
-  .slice(0, 6);
+  .slice(0, 4);
 const recentPosts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => {
     const diff = b.data.date.valueOf() - a.data.date.valueOf();
@@ -42,42 +42,42 @@ const formatPostDate = (date: Date) =>
     </div>
   </section>
 
-  <section class="section photo-section" id="photography">
+  <section class="section">
     <div class="container">
-      <SectionHeading title="Through the " emphasis="lens" index="94 frames · selected" />
-      <PhotoGrid photos={previewPhotos} href="/photography/" />
-      <div class="photo-cta">
-        <a href="/photography/">View all photos <span>&rarr;</span></a>
-      </div>
-    </div>
-  </section>
+      <div class="split-grid">
+        <div id="writing">
+          <SectionHeading title="Recent " emphasis="writing" index={`latest ${recentPosts.length}`} />
+          <ul class="post-list post-list--compact">
+            {recentPosts.map((post) => {
+              const slug = post.id.replace(/\.(md|mdx)$/, '');
+              return (
+                <li class="post-item">
+                  <a href={`/blog/${slug}/`} class="post-link">
+                    <div class="post-row-meta">
+                      <time class="post-date" datetime={post.data.date.toISOString()}>
+                        {formatPostDate(post.data.date)}
+                      </time>
+                    </div>
+                    <div class="post-row-body">
+                      <h3 class="post-title">{post.data.title}</h3>
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <div class="photo-cta">
+            <a href="/blog/">View all writing <span>&rarr;</span></a>
+          </div>
+        </div>
 
-  <section class="section" id="writing">
-    <div class="container">
-      <SectionHeading title="Recent " emphasis="writing" index={`latest ${recentPosts.length}`} />
-      <ul class="post-list">
-        {recentPosts.map((post) => {
-          const slug = post.id.replace(/\.(md|mdx)$/, '');
-          return (
-            <li class="post-item">
-              <a href={`/blog/${slug}/`} class="post-link">
-                <div class="post-row-meta">
-                  <time class="post-date" datetime={post.data.date.toISOString()}>
-                    {formatPostDate(post.data.date)}
-                  </time>
-                </div>
-                <div class="post-row-body">
-                  <h3 class="post-title">{post.data.title}</h3>
-                  {post.data.dek && <p class="post-dek">{post.data.dek}</p>}
-                  <p class="post-cta">Read essay <span aria-hidden="true">&rarr;</span></p>
-                </div>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-      <div class="photo-cta">
-        <a href="/blog/">View all writing <span>&rarr;</span></a>
+        <div class="photo-section" id="photography">
+          <SectionHeading title="Through the " emphasis="lens" index="94 frames · selected" />
+          <PhotoGrid photos={previewPhotos} href="/photography/" />
+          <div class="photo-cta">
+            <a href="/photography/">View all photos <span>&rarr;</span></a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
