@@ -42,6 +42,16 @@ const formatPostDate = (date: Date) =>
     </div>
   </section>
 
+  <section class="section photo-section" id="photography">
+    <div class="container">
+      <SectionHeading title="Through the " emphasis="lens" index="94 frames · selected" />
+      <PhotoGrid photos={previewPhotos} href="/photography/" />
+      <div class="photo-cta">
+        <a href="/photography/">View all photos <span>&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="writing">
     <div class="container">
       <SectionHeading title="Recent " emphasis="writing" index={`latest ${recentPosts.length}`} />
@@ -68,16 +78,6 @@ const formatPostDate = (date: Date) =>
       </ul>
       <div class="photo-cta">
         <a href="/blog/">View all writing <span>&rarr;</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section photo-section" id="photography">
-    <div class="container">
-      <SectionHeading title="Through the " emphasis="lens" index="94 frames · selected" />
-      <PhotoGrid photos={previewPhotos} href="/photography/" />
-      <div class="photo-cta">
-        <a href="/photography/">View all photos <span>&rarr;</span></a>
       </div>
     </div>
   </section>
