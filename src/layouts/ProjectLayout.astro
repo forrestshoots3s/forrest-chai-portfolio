@@ -32,7 +32,7 @@ const data = project.data;
         <dl class="meta-list">
           <div>
             <dt>Type</dt>
-            <dd>{data.type === 'product' ? 'Product' : 'Research'}</dd>
+            <dd>{data.type === 'product' ? 'Engineering' : 'Research'}</dd>
           </div>
           {data.role && (
             <div>
@@ -48,7 +48,7 @@ const data = project.data;
           )}
           <div>
             <dt>Stack</dt>
-            <dd>{data.stack.join(', ')}</dd>
+            <dd class="stack meta-stack">{data.stack.map((item) => <span>{item}</span>)}</dd>
           </div>
         </dl>
       </aside>

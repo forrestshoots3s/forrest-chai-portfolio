@@ -1,0 +1,47 @@
+---
+title: "ScenePrep"
+dek: "Visual pre-production for short-film teams: a TypeScript service that turns a screenplay into grounded asset requirements, researches a private reference library, and exports a signed asset package."
+type: "product"
+year: "2026"
+period: "Sep 2026 – Present"
+order: 1.2
+featuredHome: true
+featured: true
+badge: "Independent"
+stack:
+  - "TypeScript / Node"
+  - "PostgreSQL + RLS"
+  - "pg-boss workers"
+  - "REST + MCP"
+  - "OAuth"
+  - "Vitest / Playwright"
+  - "Docker"
+  - "Terraform / AWS"
+  - "GitHub Actions"
+cardBullets:
+  - "Solo project: an authenticated REST API, a durable PostgreSQL job worker, an installable CLI, and local and remote MCP, all on one set of services."
+  - "Every write takes an idempotency key, revision checks reject stale updates, and row-level security isolates tenants."
+  - "Paid model calls reserve budget in a transaction before dispatch and settle afterward, with no hidden retries."
+role: "Solo builder"
+---
+
+## What It Does
+
+ScenePrep helps short-film teams with visual pre-production. It turns a screenplay into grounded character, prop, and location requirements, researches a private reference library, lets the team review directions and select candidates, checks the intended use of each asset, and exports a signed reference or production asset package.
+
+## Architecture
+
+- **One core, several interfaces.** The same application services sit behind an authenticated REST API, an installable CLI, and local (stdio) and remote MCP. REST and MCP use distinct OAuth audiences, and the browser only gets read-only review grants.
+- **Durable jobs.** Long-running research runs on a persistent PostgreSQL / pg-boss worker. Migrations run once before replicas start, and workers never migrate the queue schema themselves.
+- **Data safety.** Tenants are isolated with row-level security; runtime database roles neither own business tables nor bypass it. Every write supports an idempotency key, and revision-sensitive writes reject stale versions.
+- **Cost control.** Each paid model run reserves budget in a transaction before dispatch and settles against the provider receipt afterward. If billing is unknown, the reservation stays open for reconciliation instead of being guessed away.
+
+## Verification
+
+- Integration, security, end-to-end, and MCP-client tests, plus an offline evaluation suite, run in GitHub Actions CI.
+- Release checks are bound to the exact Git tree they ran against; a missing or failed check never counts as a pass just because a report file exists.
+- Terraform for an ECS / HTTPS / S3 / KMS deployment validates against offline plans. It has not been applied to production yet.
+
+## Status
+
+Local engineering release with CI in place. Hosted deployment and customer validation come next.

@@ -1,6 +1,6 @@
 ---
 title: "ByteDance"
-dek: "AI agents for the Dreamina (即梦) and CapCut (剪映) strategy team: production pipelines that track the AI creative-tools market and turn it into weekly briefs for leadership."
+dek: "Data pipelines and scheduled agent runtimes for the Dreamina (即梦) and CapCut (剪映) strategy team, built to be correct on every run: checkpoints, idempotent writes, coverage gates, and post-write verification."
 type: "product"
 year: "2026"
 period: "Jun 2026 – Sep 2026"
@@ -9,18 +9,17 @@ featuredHome: true
 featured: true
 badge: "Industry"
 stack:
-  - "LLM agents"
-  - "Agent runtimes"
   - "Python"
+  - "SQL / SQLite"
+  - "Workflow runtimes"
   - "Data pipelines"
   - "LangGraph"
-  - "SQLite"
   - "Firecrawl"
-  - "Feishu / Lark"
+  - "Feishu / Lark API"
   - "Sensor Tower"
 cardBullets:
   - "AI Agent Intern on the Dreamina & CapCut strategy team."
-  - "Built Strat Market Radar, production agents that track AI creative-tool competitors across X, WeChat, tech press, and official sites."
+  - "Built a stateful workflow runtime with WAL-backed checkpoints and idempotent writes; event recall rose from 32% to 95% with zero duplicates."
   - "Agent-written briefs went directly to Zhang Nan, former CEO of Douyin Group & ByteDance China, now head of CapCut."
 role: "AI Agent Intern, Dreamina & CapCut"
 ---
@@ -28,28 +27,29 @@ role: "AI Agent Intern, Dreamina & CapCut"
 ## My Role
 
 - AI Agent Intern at ByteDance on the strategy side of Dreamina (即梦) and CapCut (剪映), June – September 2026.
-- Designed, shipped, and operated the agents behind the team's competitive-intelligence pipeline, and the weekly briefs built on top of it.
+- Designed, shipped, and operated the runtimes and data pipelines behind the team's competitive intelligence, and the weekly briefs built on top of them.
 - Reports written by these agents, including the weekly AI Film & IP brief, were delivered directly to Zhang Nan (Kelly Zhang), former CEO of Douyin Group and ByteDance China and now head of the CapCut business. <a class="proof-link" href="/proof/bytedance-weekly-brief.jpg" target="_blank" rel="noreferrer">screenshot ↗</a>
 
-## Strat Market Radar
+## Workflow Runtime (Strat Market Radar)
 
-Production competitive-intelligence agents that write to a shared monthly Feishu sheet, with tabs for X, WeChat official accounts, TechCrunch, official sites and third-party channels, and AI film & IP news.
+A scheduled runtime that coordinates concurrent API, search, and browser tasks and writes every new competitor event to a shared monthly Feishu sheet, with tabs for X, WeChat official accounts, TechCrunch, official sites and third-party channels, and AI film & IP news.
 
-- **Daily runtime.** Every run starts cold from a versioned release package with a SHA-256 manifest, so it never depends on chat history or leftover files. It pulls X, WeChat, and TechCrunch through primary APIs with per-account fallbacks, over a 24-hour main window plus a 72-hour late-recovery sweep.
+- **Cold starts.** Every daily run starts from a versioned release package with a SHA-256 manifest, so it never depends on chat history or leftover files. It pulls X, WeChat, and TechCrunch through primary APIs with per-account fallbacks, over a 24-hour main window plus a 72-hour late-recovery sweep.
+- **Safe retries.** WAL-backed SQLite checkpoints and idempotent writes mean a failed or repeated run picks up where it stopped without writing anything twice.
 - **Correctness gates.** If source coverage or pagination completeness drops below 95%, the production write is blocked. Unknowns stay visible as warnings instead of being reported as "no update", and items that fail to parse go to a manual-review tab.
 - **Verified writes.** Each run builds a deterministic write plan, writes, reads the columns back, and uploads an audit bundle. Zero duplicates per tab and zero post-write mismatches are completion criteria.
-- **Weekly official-site layer.** A Firecrawl-based runtime covers 49 official-site entry points across 19 companies plus ~70 AI film & IP sources, gap-filling through RSS, sitemaps, and JSON-LD, with fingerprint-based dedup that keeps multiple changelog events per page.
-- **Results.** On 42 labeled events, the stateful runtime (checkpoints plus idempotent writes) raised recall from 32% to 95% with zero duplicates.
-- **Source registry.** Maintained the sources behind all of it: ~150 competitor products, ~40 domestic media and VC accounts, and ~70 overseas labs, investors, and creators.
+- **Weekly crawl layer.** A Firecrawl-based runtime covers 49 official-site entry points across 19 companies plus ~70 AI film & IP sources, gap-filling through RSS, sitemaps, and JSON-LD, with fingerprint-based dedup that keeps multiple changelog events per page.
+- **Results.** On 42 labeled events, recall went from 32% to 95% with zero duplicates.
 
-## Model Feedback Platform
+## Feedback Platform
 
-- Python platform that collects and analyzes 100K+ posts and comments on frontier video models, including Seedance 2.5, at 1K+ API calls per week, with source-aware concurrency, adaptive backoff, and budget controls.
-- Classifies and ranks feedback by relevance, sentiment, theme, and engagement, cutting synthesis time by about 90% and surfacing recurring issues in instruction following, controllability, and consistency.
+- Owned and shipped Dreamina's Python feedback platform: 100K+ posts and comments on frontier video models, including Seedance 2.5, at 1K+ API calls per week.
+- Bounded, source-aware concurrency, adaptive retries with backoff, and budget controls keep multi-source ingestion reliable and inside its API budget.
+- Classifies and ranks feedback by relevance, sentiment, theme, and engagement, cutting synthesis time by about 90%.
 
-## Market Data & Weekly Briefs
+## Data Pipelines & Weekly Briefs
 
-- Incremental Python/SQL ETL across 30+ AI products, joining Sensor Tower revenue and DAU with web traffic, launch, and funding data through normalized schemas, per-source watermarks, and replayable checkpoints; data prep time dropped about 75%.
+- Incremental Python/SQL pipelines across 30+ AI products, joining Sensor Tower revenue and DAU with web traffic, launch, and funding data through normalized schemas, per-source watermarks, and replayable checkpoints; data preparation time dropped about 75%.
 - Weekly AI creative-tools industry brief: usage trends across ~35 products, plus track, funding, people, and product news.
 - Tuesday competitor brief for the Dreamina content meeting, with rule-based growth attribution: any metric up more than 5% week over week gets a primary and secondary cause, a confidence level, and sources.
-- Bi-weekly Web and App MAU/DAU benchmark across ~50 products for CapCut.
+- Bi-weekly Web and App MAU/DAU benchmark across ~50 products for CapCut, built on a source registry of ~150 competitor products and ~110 media, investor, and creator accounts.

@@ -3,22 +3,22 @@ title: "ExperienceBot"
 dek: "An LLM agent–based search and recommendation system for real-world experiences — surfacing latent dimensions of what people actually want that generic chat recommendations miss."
 type: "research"
 year: "2026"
-period: "2026 - Present"
+period: "Jul 2026 – Present"
 order: 1.5
-featuredHome: true
+featuredHome: false
 featured: true
 badge: "Research"
 stack:
+  - "Python"
+  - "Search & ranking"
   - "LLM agents"
-  - "Search & recommendation"
+  - "Offline benchmarks"
   - "HCI"
-  - "Experience design"
 cardBullets:
-  - "Researcher at Northwestern's DTR Lab."
-  - "LLM agent–based search and recommendation system for real-world experiences."
-  - "Surfaces latent experience dimensions that generic LLM recommendations miss."
-role: "Researcher, Northwestern DTR Lab"
-result: "Research focus: LLM agent search & recommendation for experiences."
+  - "Undergraduate Researcher at Northwestern's Delta Lab (DTR)."
+  - "Agentic search and recommendation: turns ambiguous goals into structured queries, retrieves evidence, and reranks results."
+  - "On a 50-query offline benchmark, +24% facet coverage and +18% nDCG@10 over single-shot LLM and semantic-search baselines."
+role: "Undergraduate Researcher, Northwestern Delta Lab (DTR)"
 external:
   label: "Northwestern DTR Lab"
   href: "https://dtr.northwestern.edu/"
@@ -27,6 +27,11 @@ external:
 ## Focus
 
 **An LLM agent–based search and recommendation system for real-world experiences.** ExperienceBot treats experience discovery — not document retrieval — as the core search problem, and uses an agentic loop to elicit, surface, and reason over the latent dimensions of an experience a user actually cares about.
+
+## What I'm Building
+
+- **Pipeline.** A Python agent that decomposes an ambiguous goal into structured facets, calls search tools to gather evidence from external sources, and combines semantic retrieval with context-aware reranking so each recommendation stays grounded and traceable.
+- **Evaluation.** A 50-query offline benchmark and ablation suite against single-shot LLM and semantic-search baselines. The current system reaches 24% higher facet coverage and 18% higher nDCG@10.
 
 ## About
 

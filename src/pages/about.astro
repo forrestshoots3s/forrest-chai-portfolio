@@ -1,18 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+
+const experience = [
+  { org: 'ByteDance — Dreamina & CapCut', role: 'AI Agent Intern', period: 'Jun – Sep 2026', href: '/projects/bytedance/' },
+  { org: 'CrowdListen', role: '#2 Software Engineer', period: 'Jan – May 2026', href: '/projects/crowdlisten/' },
+  { org: 'Northwestern Delta Lab', role: 'Undergraduate Researcher', period: 'Jul 2026 – Present', href: '/projects/experiencebot/' },
+  { org: 'IPMD', role: 'Software Engineering Intern', period: 'Jul – Aug 2024' },
+];
+
+const toolbox = [
+  { label: 'Languages', items: 'Python, TypeScript/JavaScript, Java, C++, SQL' },
+  { label: 'Backend & data', items: 'FastAPI, Node.js, PostgreSQL, Redis, SQLite, job queues' },
+  { label: 'Infra', items: 'Docker, AWS ECS/ECR, GitHub Actions, Terraform, Linux' },
+  { label: 'Frontend', items: 'React, Vite, Astro' },
+  { label: 'Applied AI', items: 'Retrieval & reranking, LLM evaluation, MCP, LangGraph' },
+];
 ---
 
 <BaseLayout
   title="About"
-  description="About Forrest Chai."
+  description="About Forrest Chai, a software engineer studying CS & Math at Northwestern."
 >
   <header class="detail-hero">
     <div class="container">
       <p class="detail-kicker">About</p>
-      <h1 class="detail-title">Builder, researcher, photographer.</h1>
+      <h1 class="detail-title">Software engineer, researcher, photographer.</h1>
       <p class="detail-dek">
-        CS, Math &amp; HCI @ Northwestern. Regeneron Science Talent Search Scholar '25.
+        CS &amp; Math @ Northwestern. Regeneron Science Talent Search Scholar '25.
       </p>
     </div>
   </header>
@@ -22,21 +37,46 @@ import SectionHeading from '../components/SectionHeading.astro';
       <article class="prose">
         <SectionHeading title="Short " emphasis="bio" />
         <p>
-          CS, Math &amp; HCI @ Northwestern. Regeneron Science Talent Search Scholar '25. I build AI products at the application layer — LLM agents, agent harnesses, and the workflows that actually make them useful.
+          CS &amp; Math @ Northwestern. Regeneron Science Talent Search Scholar '25. I'm a software engineer who cares most about the parts of a system that keep it correct: queues and workers, idempotent writes, checkpoints that make retries safe, and tests that catch failures before users do.
         </p>
         <p>
-          Currently researching LLM agent–based search and recommendation at Northwestern's Delta Lab, and agentic frameworks at REAL Lab. In my free time, I photograph sunsets and the milky way.
+          Most recently I was an AI Agent Intern at ByteDance (Dreamina &amp; CapCut), building data pipelines and scheduled runtimes for the strategy team. Before that I helped build a product from zero at an early-stage startup as one of its first two engineers, owning work from the React frontend to the backend workers and AWS deploys. I also research LLM agent–based search and recommendation at Northwestern's Delta Lab.
         </p>
         <p>
-          Always exploring and building, and always up to trade notes or collaborate on anything in applied AI. Reach me at <a href="mailto:forrestchai2029@u.northwestern.edu">forrestchai2029@u.northwestern.edu</a>.
+          In my free time, I photograph sunsets and the Milky Way. Always happy to talk about systems, products, or applied AI. Reach me at <a href="mailto:forrestchai2029@u.northwestern.edu">forrestchai2029@u.northwestern.edu</a>.
         </p>
       </article>
       <aside>
-        <SectionHeading title="Contact" />
-        <ul class="contact-list">
-          <li><a href="mailto:forrestchai2029@u.northwestern.edu">forrestchai2029@u.northwestern.edu</a></li>
-          <li>Evanston, IL</li>
+        <SectionHeading title="Experience" />
+        <ul class="contact-list about-list">
+          {experience.map((item) => (
+            <li>
+              {item.href ? <a href={item.href}>{item.org}</a> : <strong>{item.org}</strong>}
+              <span class="about-list-meta">{item.role} · {item.period}</span>
+            </li>
+          ))}
         </ul>
+
+        <div class="about-aside-block">
+          <SectionHeading title="Toolbox" />
+          <dl class="toolbox-list">
+            {toolbox.map((row) => (
+              <div>
+                <dt>{row.label}</dt>
+                <dd>{row.items}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div class="about-aside-block">
+          <SectionHeading title="Contact" />
+          <ul class="contact-list">
+            <li><a href="mailto:forrestchai2029@u.northwestern.edu">forrestchai2029@u.northwestern.edu</a></li>
+            <li><a href="https://github.com/forrestshoots3s" target="_blank" rel="noreferrer">github.com/forrestshoots3s</a></li>
+            <li>Evanston, IL</li>
+          </ul>
+        </div>
       </aside>
     </div>
   </section>

@@ -7,7 +7,7 @@ export const navItems = [
 ];
 
 export const heroBio = [
-  'CS, Math & HCI @ Northwestern. Regeneron Science Talent Search Scholar \'25. #2 Software Engineer at CrowdListen, working on business-context workflows for AI agents.',
+  'CS & Math @ Northwestern. Regeneron Science Talent Search Scholar \'25. Software engineer working across backend systems and applied AI.',
   'My research spans drug-drug interaction prediction with gated message passing neural networks and mathematical modeling competitions. In my free time, I photograph sunsets by Lake Michigan and chase the Milky Way. Always happy to chat.',
 ];
 

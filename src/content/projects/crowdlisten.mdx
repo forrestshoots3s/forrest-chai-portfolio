@@ -1,22 +1,27 @@
 ---
 title: "CrowdListen"
-dek: "Software engineering for CrowdListen's business-context workflows: turning scattered customer and community signals into usable context for AI agents."
+dek: "A full-stack audience-intelligence platform built by a two-person engineering team: React/TypeScript frontend, FastAPI services, Redis-backed job queues, and workers deployed to AWS."
 type: "product"
 year: "2026"
 period: "Jan 2026 – May 2026"
 order: 1
 featuredHome: true
 featured: true
-badge: "Product"
+badge: "Startup"
 stack:
-  - "Applied AI"
-  - "MCP"
-  - "Signal synthesis"
-  - "Agent workflows"
+  - "TypeScript / React"
+  - "Python / FastAPI"
+  - "Redis queues"
+  - "AWS ECS"
+  - "PostgreSQL / pgvector"
+  - "Docker"
+  - "GitHub Actions"
+  - "SSE"
+  - "pytest / Vitest"
 cardBullets:
-  - "#2 Software Engineer at CrowdListen."
-  - "CrowdListen gathers social and customer signals across Reddit, Discord, X, TikTok, Slack, and support channels."
-  - "It structures themes, evidence, trends, severity, and recommended actions for AI agents."
+  - "#2 Software Engineer, one of two engineers on the product."
+  - "Shipped a full-stack platform where 60–90 second analysis jobs run on Redis-backed queues and horizontally scalable workers across 11 data sources."
+  - "Owned deploys and reliability: Docker on AWS ECS/ECR through GitHub Actions, with integration and load tests for the failures we actually hit."
 role: "#2 Software Engineer at CrowdListen"
 external:
   label: "Visit crowdlisten.com"
@@ -25,13 +30,21 @@ external:
 
 ## My Role
 
-- #2 Software Engineer at CrowdListen.
-- Build and test workflows that help AI tools use current business context instead of guessing.
-- Focus on MCP-ready context, evidence-backed summaries, and practical agent workflows.
+- #2 Software Engineer at CrowdListen (January – May 2026), one of two engineers building the product.
+- Worked across the stack: the React/TypeScript frontend, Python/FastAPI services, background workers, deployment, and the evaluation loop that decided what shipped.
+
+## What I Built
+
+- **Job pipeline.** An analysis takes 60–90 seconds, so it cannot live on the request path. Requests enqueue jobs on Redis-backed queues, horizontally scalable workers pull from 11 sources, and progress streams back to the browser over server-sent events.
+- **Deployment.** Containerized the API and worker services with Docker and deployed them to AWS ECS/ECR through GitHub Actions CI/CD, with health checks, rolling deployments, and autoscaling on queue depth.
+- **Reliability.** End-to-end traces plus pytest and Vitest integration and load tests aimed at the failure modes we saw in practice: timeouts, retries, duplicate jobs, and dropped SSE connections.
+- **Retrieval.** An LLM-routed retrieval pipeline on PostgreSQL/pgvector with hybrid rank fusion, semantic deduplication, and engagement-weighted clustering.
+- **Agent interface.** Restructured a flat 30-tool MCP surface into five core tools plus on-demand modules, so an agent only loads the tools a task needs.
+
+## Results
+
+- Relevance errors down 47%, end-to-end task success up from 72% to 95%, and the share of high-signal themes up 40%.
 
 ## What CrowdListen Does
 
-- Gives AI tools current business context, so they avoid generic answers and confident guesses.
-- Gathers customer, competitor, and community signals from Reddit, Discord, X, TikTok, Slack, support tickets, and related channels.
-- Structures that context into shared workspaces with themes, severity, evidence quotes, trends, and recommended actions.
-- Connects through MCP so agents can read the same context layer without custom integrations.
+CrowdListen gathers customer, competitor, and community signals from sources like Reddit, YouTube, TikTok, X, review sites, and support channels, then structures them into themes, evidence, and recommended actions that product teams and their AI agents can use.

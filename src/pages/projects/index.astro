@@ -13,17 +13,17 @@ const researchCount = `${researchProjects.length} ${researchProjects.length === 
 
 <BaseLayout
   title="Projects"
-  description="Product and research projects by Forrest Chai."
+  description="Engineering and research projects by Forrest Chai."
 >
   <header class="detail-hero">
     <div class="container">
       <p class="detail-kicker">Projects</p>
-      <h1 class="detail-title">AI products &amp; agent research.</h1>
+      <h1 class="detail-title">Systems, products &amp; research.</h1>
       <p class="detail-dek">
-        Currently focused on LLM/VLM agent infrastructure and workflows: building, studying, and turning ideas into concrete artifacts.
+        Backend services, data pipelines, and full-stack products I have built at work and on my own, plus research on LLM agents at Northwestern.
       </p>
       <div class="project-switch" role="tablist" aria-label="Project category">
-        <button type="button" role="tab" aria-selected="true" aria-controls="product-panel" id="product-tab" data-project-tab="product">Product</button>
+        <button type="button" role="tab" aria-selected="true" aria-controls="product-panel" id="product-tab" data-project-tab="product">Engineering</button>
         <button type="button" role="tab" aria-selected="false" aria-controls="research-panel" id="research-tab" data-project-tab="research">Research</button>
       </div>
     </div>
@@ -31,7 +31,7 @@ const researchCount = `${researchProjects.length} ${researchProjects.length === 
 
   <section class="section project-panel" id="product-panel" role="tabpanel" aria-labelledby="product-tab" data-project-panel="product">
     <div class="container">
-      <SectionHeading title="Product" index={productCount} />
+      <SectionHeading title="Engineering" index={productCount} />
       <div class="project-grid">
         {productProjects.map((project) => <ProjectCard project={project} featured={project.data.featured} />)}
       </div>
